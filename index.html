@@ -1,1 +1,517 @@
-# MR-VICO
+<!doctype html>
+<html lang="en">
+<head>
+    <title>VICO TEAM - Ultimate Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        /* --- PREMIUM DARK THEME --- */
+        :root {
+            --primary: #00e5ff;
+            --secondary: #7000ff;
+            --bg-dark: #05070a;
+            --glass: rgba(16, 20, 30, 0.85);
+            --border: 1px solid rgba(0, 229, 255, 0.2);
+            --text-main: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Particles */
+        .bg-fx {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, #201c29, #000);
+            z-index: -2;
+        }
+        .glow-spot {
+            position: absolute;
+            width: 300px; height: 300px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.15;
+            border-radius: 50%;
+            animation: moveGlow 10s infinite alternate;
+            z-index: -1;
+        }
+        @keyframes moveGlow {
+            0% { top: 10%; left: 20%; }
+            100% { top: 40%; left: 80%; }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(15px);
+            border-bottom: var(--border);
+            padding: 15px 0;
+        }
+        .brand {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+        }
+
+        /* Contact Buttons (Icon Only) */
+        .contact-icon {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            margin-left: 10px;
+            transition: 0.3s;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .wa-btn { background: #25D366; box-shadow: 0 0 10px rgba(37, 211, 102, 0.3); }
+        .tg-btn { background: #0088cc; box-shadow: 0 0 10px rgba(0, 136, 204, 0.3); }
+        .contact-icon:hover { transform: scale(1.1); filter: brightness(1.2); }
+
+        /* Glass Cards */
+        .glass-box {
+            background: var(--glass);
+            border: var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            backdrop-filter: blur(20px);
+        }
+
+        /* Inputs */
+        .form-control, .form-select {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .form-control:focus, .form-select:focus {
+            background: rgba(0,0,0,0.5);
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        /* Generate Button */
+        .btn-neon {
+            width: 100%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border: none;
+            color: white;
+            padding: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .btn-neon::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        .btn-neon:hover::before { left: 100%; }
+        .btn-neon:hover { box-shadow: 0 0 30px rgba(0, 229, 255, 0.5); }
+
+        /* Payment Modal */
+        .modal-content {
+            background: #0f1219;
+            border: 1px solid var(--primary);
+            color: white;
+            border-radius: 20px;
+        }
+        .modal-header { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .btn-close { filter: invert(1); }
+
+        /* Payment Methods */
+        .pay-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 10px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: 0.3s;
+        }
+        .pay-card img { max-height: 45px; max-width: 90%; object-fit: contain; }
+        .pay-card:hover { transform: translateY(-3px); }
+        .active-pay { border-color: var(--primary); box-shadow: 0 0 15px var(--primary); background: #f0faff; }
+
+        /* Package Selector */
+        .pkg-item {
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 10px;
+        }
+        .pkg-item:hover, .pkg-active {
+            border-color: var(--primary);
+            background: rgba(0, 229, 255, 0.1);
+        }
+        .pkg-active .pkg-check { color: var(--primary); }
+
+        /* Success Screen */
+        .success-box {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        .timer-text {
+            font-family: 'Rajdhani', monospace;
+            font-size: 45px;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-fx"></div>
+    <div class="glow-spot"></div>
+
+    <nav class="navbar animate__animated animate__fadeInDown">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="brand"><i class="fas fa-cube"></i> VICO TEAM</div>
+            <div>
+                <a href="https://wa.me/8801339221633" target="_blank" class="contact-icon wa-btn">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://t.me/vicomart" target="_blank" class="contact-icon tg-btn">
+                    <i class="fab fa-telegram-plane"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        
+        <div class="row justify-content-center mb-4 animate__animated animate__fadeInUp">
+            <div class="col-md-8">
+                <div class="glass-box py-3 px-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-secondary small text-uppercase fw-bold">Daily Limit</span><br>
+                        <span id="limit-view" class="fw-bold fs-5 text-warning">Loading...</span>
+                    </div>
+                    <div>
+                        <a href="https://www.youtube.com/@many_tech07" target="_blank" onclick="addBonus()" class="btn btn-sm btn-danger rounded-pill px-3 me-2">
+                            <i class="fab fa-youtube"></i> Bonus (+5)
+                        </a>
+                        <button class="btn btn-sm btn-info rounded-pill fw-bold px-3" onclick="openModal()">
+                            <i class="fas fa-crown"></i> Premium
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-box animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="row">
+                <div class="col-lg-5 mb-4 border-end border-secondary pe-lg-4">
+                    <h5 class="text-primary mb-4 fw-bold"><i class="fas fa-sliders-h"></i> CONFIGURATION</h5>
+                    
+                    <div class="mb-3">
+                        <label class="small text-muted mb-1">BIN / IIN</label>
+                        <input type="text" id="bin_in" class="form-control" value="454868xxxxxxxxxx" maxlength="16">
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="small text-muted mb-1">MONTH</label>
+                            <select id="mon_in" class="form-select">
+                                <option value="Random">Random</option>
+                                <option>01</option><option>02</option><option>03</option><option>04</option>
+                                <option>05</option><option>06</option><option>07</option><option>08</option>
+                                <option>09</option><option>10</option><option>11</option><option>12</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="small text-muted mb-1">YEAR</label>
+                            <select id="year_in" class="form-select">
+                                <option value="Random">Random</option>
+                                <option>2025</option><option>2026</option><option>2027</option>
+                                <option>2028</option><option>2029</option><option>2030</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <label class="small text-muted mb-1">CVV</label>
+                            <input type="text" class="form-control" placeholder="Rnd" readonly>
+                        </div>
+                        <div class="col-6">
+                            <label class="small text-muted mb-1">QTY</label>
+                            <input type="number" id="qty_in" class="form-control" value="10" min="1" max="50">
+                        </div>
+                    </div>
+
+                    <button class="btn-neon" onclick="generate()">
+                        START GENERATING <i class="fas fa-bolt ms-2"></i>
+                    </button>
+                </div>
+
+                <div class="col-lg-7 ps-lg-4">
+                    <h5 class="text-primary mb-4 fw-bold"><i class="fas fa-code"></i> CONSOLE OUTPUT</h5>
+                    <textarea id="out_txt" class="form-control font-monospace mb-3" style="height: 300px; background: #080a10; color: #0f0; border: 1px solid #333; resize: none;" readonly placeholder="// Cards will appear here..."></textarea>
+                    
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-light w-50" onclick="copyData()"><i class="fas fa-copy"></i> Copy List</button>
+                        <button class="btn btn-outline-danger w-50" onclick="document.getElementById('out_txt').value=''"><i class="fas fa-trash"></i> Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="payModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">PREMIUM UPGRADE</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    
+                    <div id="pay-view">
+                        
+                        <div class="mb-4">
+                            <div class="pkg-item pkg-active" onclick="setPkg(100, 'Lifetime Access', this)">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-infinity text-info me-2"></i> Lifetime Access</span>
+                                    <span class="fw-bold fs-5">100৳</span>
+                                </div>
+                                <i class="fas fa-check-circle pkg-check float-end mt-1"></i>
+                            </div>
+                            
+                            <div class="pkg-item" onclick="setPkg(1000, 'Real Master/Visa Card', this)">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-credit-card text-warning me-2"></i> Real Master/Visa Card</span>
+                                    <span class="fw-bold fs-5">1000৳</span>
+                                </div>
+                                <i class="fas fa-check-circle pkg-check float-end mt-1" style="display:none"></i>
+                            </div>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-4">
+                                <div class="pay-card active-pay" onclick="setMethod('bkash', this)">
+                                    <img src="https://i.postimg.cc/GtrrQNwT/images.png" alt="bKash">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="pay-card" onclick="setMethod('nagad', this)">
+                                    <img src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png" alt="Nagad">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="pay-card" onclick="setMethod('rocket', this)">
+                                    <img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D1CC458D-seeklogo.com.png" alt="Rocket">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-dark border-secondary text-muted">Send Money</span>
+                            <input type="text" class="form-control text-center bg-dark border-secondary text-white fw-bold" value="01339221633" readonly>
+                            <button class="btn btn-light" onclick="navigator.clipboard.writeText('01339221633'); alert('Number Copied!')"><i class="fas fa-copy"></i></button>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" id="txn_in" class="form-control" placeholder="Enter Transaction ID (Required)">
+                        </div>
+                        <button class="btn-neon" onclick="submitPay()">CONFIRM ORDER</button>
+                    </div>
+
+                    <div id="success-view" class="success-box animate__animated animate__zoomIn">
+                        <i class="fas fa-check-circle text-success" style="font-size: 60px;"></i>
+                        <h3 class="fw-bold mt-3">Order Submitted!</h3>
+                        <p class="text-muted small">Please check your email client to send the details.</p>
+                        
+                        <div class="text-warning text-uppercase small letter-spacing-1 mt-4">Approval Time</div>
+                        <div class="timer-text" id="timer">10:00</div>
+                        
+                        <button class="btn btn-outline-light btn-sm mt-3 rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // CONFIG
+        const EMAIL = "hassankamrularno@gmail.com";
+        const LIMIT_FREE = 3;
+        const LIMIT_BONUS = 8;
+
+        // STATE
+        let currentPrice = 100;
+        let currentPkg = "Lifetime Access";
+        let currentMethod = "bkash";
+
+        // INIT
+        window.onload = () => updateLimit();
+
+        // LOGIC: GENERATOR
+        function generate() {
+            let limit = getLimit();
+            let used = parseInt(localStorage.getItem('vico_used') || 0);
+
+            if(used >= limit) {
+                openModal();
+                return;
+            }
+
+            let bin = document.getElementById('bin_in').value.trim();
+            if(bin.length < 6) { alert("Invalid BIN!"); return; }
+
+            let qty = parseInt(document.getElementById('qty_in').value);
+            let out = "";
+
+            for(let i=0; i<qty; i++) {
+                let cc = bin.replace(/x/gi, '').substring(0,15);
+                while(cc.length < 15) cc += Math.floor(Math.random()*10);
+                
+                // Luhn
+                let sum=0;
+                for(let j=0; j<cc.length; j++){
+                    let d = parseInt(cc.charAt(j));
+                    if(j%2 == (cc.length%2)) d*=2;
+                    if(d>9) d-=9;
+                    sum+=d;
+                }
+                cc += (sum*9)%10;
+
+                let m = document.getElementById('mon_in').value;
+                if(m==="Random") m = ('0'+(Math.floor(Math.random()*12)+1)).slice(-2);
+
+                let y = document.getElementById('year_in').value;
+                if(y==="Random") y = '202'+(Math.floor(Math.random()*5)+5);
+
+                let cvv = Math.floor(Math.random()*899)+100;
+
+                out += `${cc}|${m}|${y}|${cvv}\n`;
+            }
+
+            document.getElementById('out_txt').value = out;
+            localStorage.setItem('vico_used', used + 1);
+            updateLimit();
+        }
+
+        // LOGIC: LIMIT
+        function getLimit() {
+            return (localStorage.getItem('vico_sub') === 'true') ? LIMIT_BONUS : LIMIT_FREE;
+        }
+        function updateLimit() {
+            let today = new Date().toDateString();
+            if(localStorage.getItem('vico_date') !== today) {
+                localStorage.setItem('vico_used', 0);
+                localStorage.setItem('vico_date', today);
+            }
+            let left = getLimit() - (parseInt(localStorage.getItem('vico_used') || 0));
+            document.getElementById('limit-view').innerHTML = left > 0 ? `<span class='text-info'>${left} Left</span>` : `<span class='text-danger'>0 Left</span>`;
+        }
+        function addBonus() {
+            localStorage.setItem('vico_sub', 'true');
+            alert("Bonus Active! Limit Increased.");
+            setTimeout(updateLimit, 1000);
+        }
+
+        // LOGIC: MODAL & PAYMENT
+        function openModal() {
+            document.getElementById('pay-view').style.display = 'block';
+            document.getElementById('success-view').style.display = 'none';
+            new bootstrap.Modal(document.getElementById('payModal')).show();
+        }
+
+        function setPkg(price, name, el) {
+            currentPrice = price;
+            currentPkg = name;
+            document.querySelectorAll('.pkg-item').forEach(e => {
+                e.classList.remove('pkg-active');
+                e.querySelector('.pkg-check').style.display = 'none';
+            });
+            el.classList.add('pkg-active');
+            el.querySelector('.pkg-check').style.display = 'block';
+        }
+
+        function setMethod(method, el) {
+            currentMethod = method;
+            document.querySelectorAll('.pay-card').forEach(e => e.classList.remove('active-pay'));
+            el.classList.add('active-pay');
+        }
+
+        function submitPay() {
+            let txn = document.getElementById('txn_in').value;
+            if(!txn) { alert("Enter Transaction ID!"); return; }
+
+            // Mailto Trigger
+            let subject = `Premium Order: ${currentPkg}`;
+            let body = `ORDER DETAILS:%0D%0A` +
+                       `------------------%0D%0A` +
+                       `Item: ${currentPkg}%0D%0A` +
+                       `Price: ${currentPrice} BDT%0D%0A` +
+                       `Method: ${currentMethod.toUpperCase()}%0D%0A` +
+                       `TxnID: ${txn}%0D%0A` +
+                       `Send Money To: 01339221633%0D%0A%0D%0A` +
+                       `Please confirm.`;
+            
+            window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+
+            // Show Success
+            document.getElementById('pay-view').style.display = 'none';
+            document.getElementById('success-view').style.display = 'block';
+
+            // Timer
+            let time = 600; 
+            let display = document.getElementById('timer');
+            setInterval(() => {
+                let m = Math.floor(time / 60);
+                let s = time % 60;
+                display.innerText = `${m}:${s<10?'0'+s:s}`;
+                if(time > 0) time--;
+            }, 1000);
+        }
+
+        function copyData() {
+            let txt = document.getElementById('out_txt');
+            txt.select();
+            navigator.clipboard.writeText(txt.value);
+            alert("Copied!");
+        }
+    </script>
+</body>
+                              </html>
